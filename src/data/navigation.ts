@@ -17,6 +17,6 @@ export const navItems: NavItem[] = [
 export const socialLinks = {
   github: "https://github.com/Uzairkahn",
   linkedin: "https://linkedin.com/in/uzair-khan-616048385",
-  email: "mailto:hello@uzairkhan.dev", // TODO: replace with your real email
-  resume: "/resume.pdf", // TODO: place your resume PDF in /public
+  email: "mailto:uzairkhan4645632@gmail.com", // TODO: replace with your real email
+  resume: "/uzairkhan_Fullstack_developer.pdf", // Use public path for the resume file
 };

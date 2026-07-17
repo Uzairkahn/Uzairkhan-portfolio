@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { spaceGrotesk } from "@/lib/fonts";
 import { scaleIn } from "@/lib/motion";
 import type { AboutStat } from "@/data/about";
+import { JSX } from "react/jsx-runtime";
 
 const icons: Record<AboutStat["icon"], JSX.Element> = {
   briefcase: (
