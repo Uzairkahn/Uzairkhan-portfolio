@@ -4,14 +4,12 @@ export interface NavItem {
 }
 
 // Section anchors — each id must match the section's `id` attribute
-// once About/Skills/Projects/Experience/Contact are built.
+// Current page sections: Home, About, Skills, Projects.
 export const navItems: NavItem[] = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export const socialLinks = {
