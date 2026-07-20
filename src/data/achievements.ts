@@ -6,23 +6,33 @@ export interface Achievement {
 
 export const achievements: Achievement[] = [
   {
-    emoji: "🏆",
+    emoji: "⭐",
     title: "Fiverr Level 2 Seller",
-    description: "Delivered multiple client projects with strong ratings and fast turnaround."
-  },
-  {
-    emoji: "🎓",
-    title: "Academic Excellence",
-    description: "Graduated with a strong focus on software engineering and AI research."
-  },
-  {
-    emoji: "🚀",
-    title: "Production Launch",
-    description: "Deployed and maintained full-stack applications used by real users."
+    description: "Delivered an extensive freelance project portfolio with strong client ratings since 2022.",
   },
   {
     emoji: "🤖",
-    title: "AI Integration",
-    description: "Built AI-enhanced features for accessible learning and automation workflows."
-  }
+    title: "Google AI Essentials",
+    description: "Certification covering foundational AI concepts and real-world applications.",
+  },
+  {
+    emoji: "✨",
+    title: "Google Prompting Essentials",
+    description: "Certification in effective prompt engineering practices.",
+  },
+  {
+    emoji: "🏆",
+    title: "Russian Open Doors Olympiad Winner",
+    description: "Scholarship winner for an M.Sc. program at NUST MISIS, Moscow (2024).",
+  },
+  {
+    emoji: "🦾",
+    title: "Robotics Club Executive Member",
+    description: "Served in an executive leadership role within the university robotics club.",
+  },
+  {
+    emoji: "🎉",
+    title: "TechFest Volunteer",
+    description: "Volunteered in organizing university TechFest events.",
+  },
 ];

@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Sparkles, Play } from "lucide-react";
 import { AiFillGithub } from "react-icons/ai";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { fadeUp } from "@/lib/motion";
+import { cn, focusRing } from "@/lib/utils";
 import type { Project } from "@/data/projects";
 import ProjectMockup from "./ProjectMockup";
 import TechBadge from "./TechBadge";
+import VideoModal from "./VideoModal";
 
 interface ProjectCardProps {
   project: Project;
@@ -17,6 +20,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index, reverse }: ProjectCardProps) {
   const [from, to] = project.accent;
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   return (
     <motion.div
@@ -37,6 +41,7 @@ export default function ProjectCard({ project, index, reverse }: ProjectCardProp
           accent={project.accent}
           categoryIcon={project.categoryIcon}
           chips={[project.stack[0], project.stack[1] ?? project.stack[0]]}
+          coverImage={project.coverImage}
         />
 
         {/* Content side */}
@@ -175,7 +180,9 @@ export default function ProjectCard({ project, index, reverse }: ProjectCardProp
             {project.outcome}
           </motion.p>
 
-          {/* Buttons */}
+          {/* Buttons — GitHub only renders when a real repo URL exists;
+              Live Demo takes priority over Watch Demo; if neither a
+              real demo nor a video exists, no action button is shown. */}
           <motion.div
             custom={9}
             initial="hidden"
@@ -184,28 +191,62 @@ export default function ProjectCard({ project, index, reverse }: ProjectCardProp
             variants={fadeUp}
             className="mt-8 flex flex-wrap gap-3"
           >
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors duration-300 hover:border-white/30 hover:text-white"
-            >
-              <AiFillGithub size={16} />
-              GitHub
-            </a>
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105"
-              style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}
-            >
-              Live Demo
-              <ArrowUpRight size={16} />
-            </a>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-white/80 transition-colors duration-300 hover:border-white/30 hover:text-white",
+                  focusRing
+                )}
+              >
+                <AiFillGithub size={16} />
+                GitHub
+              </a>
+            )}
+
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105",
+                  focusRing
+                )}
+                style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}
+              >
+                Live Demo
+                <ArrowUpRight size={16} />
+              </a>
+            )}
+
+            {!project.demoUrl && project.videoUrl && (
+              <button
+                onClick={() => setIsVideoOpen(true)}
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform duration-300 hover:scale-105",
+                  focusRing
+                )}
+                style={{ background: `linear-gradient(90deg, ${from}, ${to})` }}
+              >
+                <Play size={15} fill="currentColor" />
+                Watch Demo
+              </button>
+            )}
           </motion.div>
         </div>
       </div>
+
+      {project.videoUrl && (
+        <VideoModal
+          isOpen={isVideoOpen}
+          onClose={() => setIsVideoOpen(false)}
+          videoUrl={project.videoUrl}
+          title={project.title}
+        />
+      )}
 
       {/* Divider between projects */}
       {index < 3 && (

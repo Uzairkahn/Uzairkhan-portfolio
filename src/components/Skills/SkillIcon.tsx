@@ -1,7 +1,7 @@
+import type { ReactElement } from "react";
 import type { SkillIconName } from "@/data/skills";
-import { JSX } from "react/jsx-runtime";
 
-const paths: Record<SkillIconName, JSX.Element> = {
+const paths: Record<SkillIconName, ReactElement> = {
   frontend: (
     <path
       d="M4 6l-3 6 3 6M20 6l3 6-3 6M14 4l-4 16"

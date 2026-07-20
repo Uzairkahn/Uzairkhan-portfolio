@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { Layers, Boxes, Brain, Smartphone } from "lucide-react";
 import { jetbrainsMono } from "@/lib/fonts";
 import { useMousePosition } from "@/hooks/useMousePosition";
@@ -19,18 +20,23 @@ interface ProjectMockupProps {
   accent: [string, string];
   categoryIcon: ProjectCategory;
   chips: string[];
+  coverImage?: string;
 }
 
 /**
- * Browser-chrome style screenshot placeholder. Swap the center block
- * for a real <Image /> of the live product once available — the
- * frame, glow, and floating chips are designed to survive that swap.
+ * Browser-chrome style screenshot frame. Renders a real cover image
+ * when one exists at `coverImage`; if the file is missing or fails to
+ * load, falls back to the illustrated icon placeholder automatically —
+ * so dropping a screenshot into /public/images/projects/<slug>/cover.*
+ * is the only step needed to upgrade a card.
  */
-export default function ProjectMockup({ title, accent, categoryIcon, chips }: ProjectMockupProps) {
+export default function ProjectMockup({ title, accent, categoryIcon, chips, coverImage }: ProjectMockupProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouse = useMousePosition(containerRef);
+  const [imageFailed, setImageFailed] = useState(false);
   const Icon = categoryIcons[categoryIcon];
   const [from, to] = accent;
+  const showImage = Boolean(coverImage) && !imageFailed;
 
   return (
     <div ref={containerRef} className="group relative w-full">
@@ -38,11 +44,13 @@ export default function ProjectMockup({ title, accent, categoryIcon, chips }: Pr
       <div
         className="pointer-events-none absolute -inset-6 rounded-[2.5rem] opacity-30 blur-3xl transition-opacity duration-500 group-hover:opacity-50"
         style={{ background: `linear-gradient(135deg, ${from}, ${to})` }}
+        aria-hidden="true"
       />
 
       {/* Mouse-follow glow */}
       <div
         className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        aria-hidden="true"
         style={{
           background: `radial-gradient(320px circle at ${mouse.x}% ${mouse.y}%, ${from}22, transparent 70%)`,
         }}
@@ -78,30 +86,44 @@ export default function ProjectMockup({ title, accent, categoryIcon, chips }: Pr
             className="relative flex aspect-[16/11] w-full items-center justify-center overflow-hidden"
             style={{ background: `linear-gradient(155deg, ${from}1a, #05070E 65%)` }}
           >
-            {/* subtle grid */}
-            <div
-              className="absolute inset-0 opacity-[0.07]"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                backgroundSize: "28px 28px",
-              }}
-            />
+            {showImage ? (
+              <Image
+                src={coverImage as string}
+                alt={`${title} screenshot`}
+                fill
+                sizes="(min-width: 1024px) 560px, 90vw"
+                className="object-cover"
+                onError={() => setImageFailed(true)}
+              />
+            ) : (
+              <>
+                {/* subtle grid */}
+                <div
+                  className="absolute inset-0 opacity-[0.07]"
+                  aria-hidden="true"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                    backgroundSize: "28px 28px",
+                  }}
+                />
 
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md"
-              style={{ color: from }}
-            >
-              <Icon size={32} strokeWidth={1.5} />
-            </motion.div>
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md"
+                  style={{ color: from }}
+                >
+                  <Icon size={32} strokeWidth={1.5} />
+                </motion.div>
 
-            <span
-              className={`absolute bottom-5 text-[10px] tracking-widest text-white/25 ${jetbrainsMono.className}`}
-            >
-              PRODUCT SCREENSHOT — REPLACE
-            </span>
+                <span
+                  className={`absolute bottom-5 text-[10px] tracking-widest text-white/25 ${jetbrainsMono.className}`}
+                >
+                  PRODUCT SCREENSHOT — REPLACE
+                </span>
+              </>
+            )}
           </div>
         </motion.div>
       </div>

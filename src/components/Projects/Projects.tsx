@@ -2,10 +2,9 @@
 
 import { motion } from "framer-motion";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
-import { fadeUp } from "@/lib/motion";
+import { fadeUp, blurReveal } from "@/lib/motion";
 import { projects } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
-import ProjectsCTA from "./ProjectsCTA";
 
 export default function Projects() {
   return (
@@ -39,7 +38,7 @@ export default function Projects() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
-            variants={fadeUp}
+            variants={blurReveal}
             className={`mx-auto mt-6 max-w-2xl text-4xl font-semibold tracking-tight text-white sm:text-5xl ${spaceGrotesk.className}`}
           >
             Real-world software,{" "}
@@ -67,8 +66,6 @@ export default function Projects() {
             <ProjectCard key={project.slug} project={project} index={i} reverse={i % 2 === 1} />
           ))}
         </div>
-
-        <ProjectsCTA />
       </div>
     </section>
   );

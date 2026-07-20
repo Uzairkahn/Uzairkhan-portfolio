@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { navItems, socialLinks } from "@/data/navigation";
-import { useScrollPosition } from "../../hooks/useScrollPosition";
+import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { jetbrainsMono } from "@/lib/fonts";
-import { cn } from "@/lib/utils";
+import { cn, focusRing } from "@/lib/utils";
 import NavLink from "./NavLink";
 import MobileMenu from "./MobileMenu";
 
@@ -15,9 +15,6 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const observerRef = useRef<IntersectionObserver | null>(null);
 
-  // Scrollspy: watches each section referenced in navItems and marks
-  // the one most visible in the viewport as active. Safe to run before
-  // later sections exist — it simply finds nothing and no-ops.
   useEffect(() => {
     const sections = navItems
       .map((item) => document.getElementById(item.href.replace("#", "")))
@@ -40,7 +37,6 @@ export default function Navbar() {
     return () => observerRef.current?.disconnect();
   }, []);
 
-  // Lock body scroll while the mobile drawer is open
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => {
@@ -64,8 +60,7 @@ export default function Navbar() {
               : "border-transparent bg-transparent"
           )}
         >
-          {/* Logo — left */}
-          <a href="#home" className="flex items-center gap-2">
+          <a href="#home" className={cn("flex items-center gap-2 rounded-full", focusRing)}>
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#4C7CFF] to-[#9D5CFF] text-sm font-bold text-white">
               U
             </span>
@@ -74,8 +69,7 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Nav links — center */}
-          <nav className="hidden items-center gap-7 md:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
             {navItems.map((item) => (
               <NavLink
                 key={item.href}
@@ -86,31 +80,36 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Buttons — right */}
           <div className="hidden items-center gap-3 md:flex">
             <a
               href={socialLinks.resume}
               download
-              className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/80 transition hover:border-white/30 hover:text-white"
+              className={cn(
+                "rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/80 transition hover:border-white/30 hover:text-white",
+                focusRing
+              )}
             >
               Resume
             </a>
-
             <a
               href={socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-gradient-to-r from-[#4C7CFF] to-[#9D5CFF] px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+              className={cn(
+                "rounded-full bg-gradient-to-r from-[#4C7CFF] to-[#9D5CFF] px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105",
+                focusRing
+              )}
             >
               GitHub
             </a>
           </div>
 
-          {/* Hamburger — mobile only */}
           <button
             onClick={() => setIsMobileOpen(true)}
             aria-label="Open menu"
-            className="flex flex-col items-end gap-1.5 md:hidden"
+            aria-expanded={isMobileOpen}
+            aria-controls="mobile-menu"
+            className={cn("flex flex-col items-end gap-1.5 rounded-sm p-1 md:hidden", focusRing)}
           >
             <span className="h-[1.5px] w-6 bg-white/80" />
             <span className="h-[1.5px] w-4 bg-white/80" />

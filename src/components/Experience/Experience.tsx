@@ -10,7 +10,6 @@ import ExperienceCard from "./ExperienceCard";
 import SectionDivider from "./SectionDivider";
 import EducationCard from "./EducationCard";
 import AchievementCard from "./AchievementCard";
-import ExperienceCTA from "./ExperienceCTA";
 
 export default function Experience() {
   return (
@@ -72,7 +71,6 @@ export default function Experience() {
             <ExperienceCard
               key={entry.company}
               entry={entry}
-              index={i}
               isLast={i === experienceEntries.length - 1}
             />
           ))}
@@ -134,8 +132,6 @@ export default function Experience() {
             ))}
           </div>
         </div>
-
-        <ExperienceCTA />
       </div>
     </section>
   );

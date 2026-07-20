@@ -19,3 +19,15 @@ export const scaleIn: Variants = {
     transition: { duration: 0.6, delay: 0.08 * i, ease: "easeOut" },
   }),
 };
+
+// Slightly more premium entrance for section headings — a soft blur
+// resolves into focus alongside the existing fade/slide.
+export const blurReveal: Variants = {
+  hidden: { opacity: 0, y: 16, filter: "blur(8px)" },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, delay: 0.08 * i, ease: "easeOut" },
+  }),
+};

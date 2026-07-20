@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, focusRing } from "@/lib/utils";
 
 interface NavLinkProps {
   href: string;
@@ -10,18 +10,16 @@ interface NavLinkProps {
   onClick?: () => void;
 }
 
-/**
- * Single navbar link with a shared animated underline indicator.
- * The underline slides between links using Framer Motion's layoutId.
- */
 export default function NavLink({ href, label, isActive, onClick }: NavLinkProps) {
   return (
     <a
       href={href}
       onClick={onClick}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
-        "relative px-1 py-2 text-sm font-medium transition-colors duration-300",
-        isActive ? "text-white" : "text-white/60 hover:text-white/90"
+        "relative rounded-sm px-1 py-2 text-sm font-medium transition-colors duration-300",
+        isActive ? "text-white" : "text-white/60 hover:text-white/90",
+        focusRing
       )}
     >
       {label}

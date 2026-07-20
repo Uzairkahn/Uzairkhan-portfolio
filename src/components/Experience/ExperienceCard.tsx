@@ -3,17 +3,15 @@
 import { motion } from "framer-motion";
 import { Building2, CheckCircle2, Star } from "lucide-react";
 import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
-import { fadeUp } from "@/lib/motion";
 import TechBadge from "@/components/Projects/TechBadge";
 import type { ExperienceEntry } from "../../data/experience";
 
 interface ExperienceCardProps {
   entry: ExperienceEntry;
-  index: number;
   isLast: boolean;
 }
 
-export default function ExperienceCard({ entry, index, isLast }: ExperienceCardProps) {
+export default function ExperienceCard({ entry, isLast }: ExperienceCardProps) {
   return (
     <div className="relative pl-14 sm:pl-20">
       {/* Timeline rail */}

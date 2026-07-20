@@ -5,6 +5,7 @@ import { spaceGrotesk, jetbrainsMono } from "@/lib/fonts";
 import { fadeUp } from "@/lib/motion";
 import { highlights, aboutStats } from "@/data/about";
 import AboutCard from "./AboutCard";
+import ProfileImage from "./ProfileImage";
 
 export default function About() {
   return (
@@ -43,15 +44,7 @@ export default function About() {
           >
             <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-[#4C7CFF]/20 to-[#9D5CFF]/20 blur-2xl" />
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0B0F1D]/70 backdrop-blur-xl">
-              {/* Replace this block with a real <Image /> when ready */}
-              <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-white/30">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="1.5" />
-                  <circle cx="9" cy="10" r="1.75" stroke="currentColor" strokeWidth="1.5" />
-                  <path d="M4 17l5-5 3 3 3-3.5 5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                </svg>
-                <span className={`text-xs tracking-widest ${jetbrainsMono.className}`}>YOUR PHOTO HERE</span>
-              </div>
+              <ProfileImage />
 
               {/* Gradient border ring on hover */}
               <div className="absolute inset-0 rounded-[1.75rem] ring-1 ring-inset ring-white/10" />
@@ -92,11 +85,13 @@ export default function About() {
               variants={fadeUp}
               className="mt-6 max-w-xl text-base leading-relaxed text-white/50"
             >
-              I recently graduated with a BS in Computer Science and I'm currently
-              splitting my time across two internships as a full-stack and mobile
-              developer. I like owning things end to end — planning, building, and
-              shipping — and I'm increasingly focused on weaving AI into products
-              in ways that actually help people, not just as a buzzword.
+              I recently finished my BS in Computer Science and I&apos;m currently
+              working across two internships, building as a full-stack and mobile
+              developer. I like taking a product from a rough idea through to
+              something people actually use, and I&apos;m drawn to AI integration
+              when it solves a real problem rather than just adding a feature.
+              Outside of internship work, I&apos;m usually picking apart a new
+              framework or tool to see where it fits into what I build next.
             </motion.p>
 
             <motion.div

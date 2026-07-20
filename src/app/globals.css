@@ -24,3 +24,40 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Hero aurora background — slow, ambient drift behind the content.
+   Kept subtle: long duration, small excursions, no hard edges. */
+@keyframes aurora-drift-a {
+  0%, 100% { transform: translate3d(0%, 0%, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(6%, -8%, 0) rotate(10deg) scale(1.12); }
+}
+
+@keyframes aurora-drift-b {
+  0%, 100% { transform: translate3d(0%, 0%, 0) rotate(0deg) scale(1); }
+  50% { transform: translate3d(-7%, 6%, 0) rotate(-8deg) scale(1.08); }
+}
+
+@keyframes aurora-drift-c {
+  0%, 100% { transform: translate3d(0%, 0%, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate3d(-4%, -5%, 0) scale(1.15); opacity: 0.8; }
+}
+
+.animate-aurora-a {
+  animation: aurora-drift-a 24s ease-in-out infinite;
+}
+
+.animate-aurora-b {
+  animation: aurora-drift-b 28s ease-in-out infinite;
+}
+
+.animate-aurora-c {
+  animation: aurora-drift-c 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora-a,
+  .animate-aurora-b,
+  .animate-aurora-c {
+    animation: none;
+  }
+}

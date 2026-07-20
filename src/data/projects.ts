@@ -11,8 +11,16 @@ export interface Project {
   features: string[];
   stack: string[];
   outcome: string;
-  github: string;
-  demo: string;
+  /** Real public repository URL. Omit if not yet public — the GitHub
+   *  button only renders when this is set, so no dead links appear. */
+  github?: string;
+  /** Real, working live deployment. Takes priority over videoUrl. */
+  demoUrl?: string;
+  /** Fallback demo video, used only when demoUrl is not available. */
+  videoUrl?: string;
+  /** Path under /public. Falls back to an illustrated placeholder
+   *  automatically if the file doesn't exist yet. */
+  coverImage?: string;
   accent: [string, string]; // gradient pair, unique per project but within brand family
   flagship?: boolean;
 }
@@ -70,7 +78,8 @@ export const projects: Project[] = [
     outcome:
       "Deployed to production with the frontend on Vercel and backend on Render, backed by MongoDB Atlas — fully functional across booking, messaging, and admin workflows.",
     github: "https://github.com/Uzairkahn/loka-marketplace",
-    demo: "#",
+    demoUrl: "https://loka-marketplace-tau.vercel.app/",
+    coverImage: "/images/projects/loka/cover.png",
     accent: ["#4C7CFF", "#9D5CFF"],
     flagship: true,
   },
@@ -104,8 +113,9 @@ export const projects: Project[] = [
     stack: ["React", "Node.js", "Express.js", "MongoDB Atlas", "REST APIs", "JavaScript", "Vercel", "Render"],
     outcome:
       "Delivered a fully functional CRUD platform deployed on Vercel and Render, streamlining vendor quotation management end to end.",
-    github: "#",
-    demo: "#",
+    demoUrl: "https://vendorhub-quotation-management-syst.vercel.app",
+    coverImage: "/images/projects/vendorhub/cover.png",
+    github: "https://github.com/Uzairkahn/vendorhub-quotation-management-system",
     accent: ["#38BDF8", "#4C7CFF"],
   },
   {
@@ -136,8 +146,9 @@ export const projects: Project[] = [
     stack: ["Python", "Flask", "Transformers", "Whisper", "gTTS", "SQLite"],
     outcome:
       "Completed as a final year project, successfully integrating multiple AI models — speech, summarization, and translation — into a single accessible platform.",
-    github: "#",
-    demo: "#",
+    videoUrl: "/images/videos/projects/kidemy-demo.mp4",
+    coverImage: "/images/projects/kidemy/cover.png",
+    github: "https://github.com/Uzairkahn/inclusive-learning-assistant",
     accent: ["#9D5CFF", "#FF6FD8"],
   },
   {
@@ -159,8 +170,9 @@ export const projects: Project[] = [
     stack: ["Flutter", "Firebase", "Dart"],
     outcome:
       "Built as a cross-platform mobile app with Firebase-backed cloud sync and authentication, running consistently across Android and iOS.",
-    github: "#",
-    demo: "#",
+    videoUrl: "/images/videos/projects/qrvault-demo.mp4",
+    coverImage: "/images/projects/qrvault/cover.jpeg",
+    github: "https://github.com/Uzairkahn/qr-vault-flutter",
     accent: ["#22D3A5", "#4C7CFF"],
   },
 ];

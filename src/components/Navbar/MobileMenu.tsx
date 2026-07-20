@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { NavItem } from "@/data/navigation";
 import { socialLinks } from "@/data/navigation";
+import { cn, focusRing } from "@/lib/utils";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -38,7 +39,6 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             key="backdrop"
             variants={backdropVariants}
@@ -47,12 +47,16 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
             exit="hidden"
             transition={{ duration: 0.25 }}
             onClick={onClose}
+            aria-hidden="true"
             className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
           />
 
-          {/* Drawer panel */}
           <motion.div
             key="panel"
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
             variants={panelVariants}
             initial="hidden"
             animate="visible"
@@ -65,7 +69,10 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
               <button
                 onClick={onClose}
                 aria-label="Close menu"
-                className="rounded-full border border-white/10 p-2 text-white/70 transition hover:border-white/30 hover:text-white"
+                className={cn(
+                  "rounded-full border border-white/10 p-2 text-white/70 transition hover:border-white/30 hover:text-white",
+                  focusRing
+                )}
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -74,6 +81,7 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
             </div>
 
             <motion.nav
+              aria-label="Mobile"
               variants={linkListVariants}
               initial="hidden"
               animate="visible"
@@ -87,7 +95,11 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
                     variants={linkItemVariants}
                     href={item.href}
                     onClick={onClose}
-                    className="flex items-baseline gap-3 text-2xl font-medium tracking-tight"
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex items-baseline gap-3 rounded-sm text-2xl font-medium tracking-tight",
+                      focusRing
+                    )}
                   >
                     <span className="font-mono text-xs text-[#4C7CFF]">
                       {String(i + 1).padStart(2, "0")}
@@ -104,16 +116,21 @@ export default function MobileMenu({ isOpen, onClose, navItems, activeSection }:
               <a
                 href={socialLinks.resume}
                 download
-                className="w-full rounded-full bg-gradient-to-r from-[#4C7CFF] to-[#9D5CFF] px-5 py-3 text-center text-sm font-semibold text-white"
+                className={cn(
+                  "w-full rounded-full bg-gradient-to-r from-[#4C7CFF] to-[#9D5CFF] px-5 py-3 text-center text-sm font-semibold text-white",
+                  focusRing
+                )}
               >
                 Resume
               </a>
-
               <a
                 href={socialLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full rounded-full border border-white/15 px-5 py-3 text-center text-sm font-semibold text-white/80"
+                className={cn(
+                  "w-full rounded-full border border-white/15 px-5 py-3 text-center text-sm font-semibold text-white/80",
+                  focusRing
+                )}
               >
                 GitHub
               </a>

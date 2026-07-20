@@ -1,19 +1,25 @@
-import About from "@/components/About/About";
-import Hero from "@/components/Hero/Hero";
 import Navbar from "@/components/Navbar/Navbar";
-import Experience from "@/components/Experience/Experience";
-import Projects from "@/components/Projects/Projects";
+import Hero from "@/components/Hero/Hero";
+import About from "@/components/About/About";
 import Skills from "@/components/Skills/Skills";
+import WhyWorkWithMe from "@/components/WhyWorkWithMe/WhyWorkWithMe";
+import Projects from "@/components/Projects/Projects";
+import Experience from "@/components/Experience/Experience";
+import Contact from "@/components/Contact/Contact";
+import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
   return (
-    <div>
+    <main className="bg-[#05070E]">
       <Navbar />
       <Hero />
       <About />
       <Skills />
-      <Experience />
+      <WhyWorkWithMe />
       <Projects />
-    </div>
+      <Experience />
+      <Contact />
+      <Footer />
+    </main>
   );
 }
